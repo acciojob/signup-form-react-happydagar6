@@ -32,12 +32,12 @@ const App = () => {
 
     // Priority 3: Check if Email contains '@'
     if (!email.includes('@')) {
-      setError('Email must contain @');
+      setError('email must contain @');
       return;
     }
 
     // Priority 4: Check Gender values
-    if (gender !== 'male' && gender !== 'female' && gender !== 'other') {
+    if (gender !== 'male' && gender !== 'female' && gender !== 'others') {
       setError('Please identify as male, female or others');
       return;
     }
@@ -56,8 +56,7 @@ const App = () => {
     }
 
     // If all validations pass, extract username and show welcome message
-    const username = email.split('@')[0];
-    setWelcomeMessage(`Hello ${username}`);
+    setWelcomeMessage(`Hello ${name}`);
   };
 
   return (
@@ -86,15 +85,13 @@ const App = () => {
           onChange={(e) => setEmail(e.target.value)} 
         />
         
-        <select 
+        <input 
+          type="text" 
+          placeholder="Gender" 
           data-testid="gender" 
           value={gender} 
-          onChange={(e) => setGender(e.target.value)}
-        >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
+          onChange={(e) => setGender(e.target.value)} 
+        />
         
         <input 
           type="text" 
