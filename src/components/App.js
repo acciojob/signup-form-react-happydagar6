@@ -17,8 +17,8 @@ const App = () => {
     setError('');
     setWelcomeMessage('');
 
-    // Priority 1: Check if empty (Excluded 'gender' so the specific gender error can fire)
-    if (!name || !email || !phoneNumber || !password) {
+    // Priority 1: Check if any fields are empty (including gender)
+    if (!name || !email || !gender || !phoneNumber || !password) {
       setError('All fields are mandatory');
       return;
     }
@@ -30,7 +30,7 @@ const App = () => {
       return;
     }
 
-    // Priority 3: Check if Email contains '@' (Must be lowercase 'e' to pass the test)
+    // Priority 3: Check if Email contains '@'
     if (!email.includes('@')) {
       setError('email must contain @');
       return;
@@ -55,14 +55,15 @@ const App = () => {
       return;
     }
 
-    // If all validations pass, show welcome message using the Name field
-    // (This satisfies the Cypress expectation of 'Hello UMAKANT')
-    setWelcomeMessage(`Hello ${name}`);
+    // If all validations pass, extract username from email and show welcome message
+    const username = email.split('@')[0];
+    setWelcomeMessage(`Hello ${username}`);
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
       
+      {/* Renders the success message. Removed static heading so Cypress finds this easily */}
       {welcomeMessage && <h2>{welcomeMessage}</h2>}
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width: '300px', gap: '15px' }}>
@@ -114,7 +115,7 @@ const App = () => {
         </button>
       </form>
 
-      {/* Renders the error as a span exactly as required by the test */}
+      {/* Renders the error exactly inside a <span> tag as requested by Cypress */}
       {error && <span style={{ color: 'red', display: 'block', marginTop: '15px' }}>{error}</span>}
       
     </div>
