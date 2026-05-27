@@ -30,7 +30,7 @@ const App = () => {
 
     // Priority 3: Email @
     if (!email.includes('@')) {
-      setError('Email must contain @');
+      setError('email must contain @');
       return;
     }
 
@@ -67,10 +67,9 @@ const App = () => {
         <input name="email" type="text" placeholder="Email address" data-testid="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         
         <select name="gender" data-testid="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
-          <option value="">Select Gender</option>
-          <option value="male">male</option>
-          <option value="female">female</option>
-          <option value="other">other</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
         </select>
         
         <input name="phoneNumber" type="text" placeholder="Phone Number" data-testid="phoneNumber" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
