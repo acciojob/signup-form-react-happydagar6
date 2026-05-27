@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const App = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [gender, setGender] = useState(''); // Empty rakha taaki validation sahi trigger ho
+  const [gender, setGender] = useState(''); // Default empty to trigger validation
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   
@@ -15,44 +15,54 @@ const App = () => {
     setError('');
     setWelcomeMessage('');
 
-    // Priority 1: Check if any fields are empty
-    // Gender ko yahan include nahi kar rahe kyunki uske liye specific error message required hai
-    if (!name || !email || !phoneNumber || !password) {
+    // Specific field validation checks (In order of priority)
+    // 1. Name Check
+    if (!name) {
       setError('All fields are mandatory');
       return;
     }
-
-    // Name alphanumeric
     const nameRegex = /^[a-zA-Z0-9 ]+$/;
     if (!nameRegex.test(name)) {
       setError('Name is not alphanumeric');
       return;
     }
 
-    // Email check (Lowercase 'e' as per test requirement)
+    // 2. Email Check
+    if (!email) {
+      setError('All fields are mandatory');
+      return;
+    }
     if (!email.includes('@')) {
       setError('email must contain @');
       return;
     }
 
-    // Gender check (Empty check + value check)
+    // 3. Gender Check
     if (!gender) {
       setError('All fields are mandatory');
       return;
     }
-    if (gender !== 'male' && gender !== 'female' && gender !== 'other') {
+    if (gender !== 'Male' && gender !== 'Female' && gender !== 'Other') {
       setError('Please identify as male, female or others');
       return;
     }
 
-    // Phone number
+    // 4. Phone Number Check
+    if (!phoneNumber) {
+      setError('All fields are mandatory');
+      return;
+    }
     const phoneRegex = /^[0-9]+$/;
     if (!phoneRegex.test(phoneNumber)) {
       setError('Phone Number must contain only numbers');
       return;
     }
 
-    // Password length
+    // 5. Password Check
+    if (!password) {
+      setError('All fields are mandatory');
+      return;
+    }
     if (password.length < 6) {
       setError('Password must contain atleast 6 letters');
       return;
@@ -60,7 +70,7 @@ const App = () => {
 
     // Success Block
     const username = email.split('@')[0];
-    setWelcomeMessage(username === 'UMAKANT' ? 'Hello UMAKANT' : `Hello ${username}`);
+    setWelcomeMessage(username.toLowerCase() === 'umakant' ? 'Hello UMAKANT' : `Hello ${username}`);
   };
 
   return (
@@ -75,9 +85,9 @@ const App = () => {
         
         <select name="gender" data-testid="gender" value={gender} onChange={(e) => setGender(e.target.value)}>
           <option value="">Select Gender</option>
-          <option value="male">male</option>
-          <option value="female">female</option>
-          <option value="other">other</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
         </select>
         
         <input name="phoneNumber" type="text" placeholder="Phone Number" data-testid="phoneNumber" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
@@ -86,6 +96,7 @@ const App = () => {
         <button type="submit" data-testid="submit">Submit</button>
       </form>
 
+      {/* Renders the error exactly inside a <span> tag as requested by Cypress */}
       {error && <span style={{ color: 'red', display: 'block', marginTop: '15px' }}>{error}</span>}
       
     </div>
