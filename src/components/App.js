@@ -42,7 +42,7 @@ const App = () => {
       setError('All fields are mandatory');
       return;
     }
-    if (gender !== 'Male' && gender !== 'Female' && gender !== 'Other') {
+    if (gender !== 'male' && gender !== 'female' && gender !== 'other') {
       setError('Please identify as male, female or others');
       return;
     }
